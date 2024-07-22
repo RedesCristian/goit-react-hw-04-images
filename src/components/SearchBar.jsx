@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
-import styles from './Searchbar.module.css';
 import PropTypes from 'prop-types';
+import styles from './Searchbar.module.css';
 
 const Searchbar = ({ onSubmit }) => {
   const [query, setQuery] = useState('');
+
   const handleChange = event => {
     setQuery(event.target.value);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
+    if (query.trim() === '') {
+      return; // Prevent submitting empty query
+    }
     onSubmit(query);
-    setQuery('');
+    setQuery(''); // Clear the input after submitting
   };
 
   return (
@@ -33,6 +37,7 @@ const Searchbar = ({ onSubmit }) => {
     </header>
   );
 };
+
 Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
